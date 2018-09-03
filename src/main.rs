@@ -17,7 +17,7 @@ struct IsUpResult {
 	response_time: f32,
 }
 
-fn main() {
+fn get_url() -> String {
 	let matches = App::new("isup")
 		.version("0.1.0")
 		.author("Paul Crane")
@@ -32,7 +32,12 @@ fn main() {
 		.get_matches();
 
 	let url = matches.value_of("URL").unwrap();
-	let final_url = "http://isitup.org/".to_owned() + url + ".json";
+	return String::from(url);
+}
+
+fn main() {
+	let url = get_url();
+	let final_url = "http://isitup.org/".to_owned() + &url + ".json";
 	let json_result: IsUpResult = reqwest::get(&final_url).unwrap().json().unwrap();
 
 	println!("{}", json_result.status_code);
