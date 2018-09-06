@@ -35,6 +35,10 @@ fn get_url() -> String {
 	return String::from(url);
 }
 
+//1 Website is alive.
+//2 Website appears down.
+//3 Domain was not valid.
+
 fn main() {
 	let url = get_url();
 	let final_url = "http://isitup.org/".to_owned() + &url + ".json";
