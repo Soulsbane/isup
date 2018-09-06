@@ -32,7 +32,9 @@ fn get_url() -> String {
 		.get_matches();
 
 	let url = matches.value_of("URL").unwrap();
-	return String::from(url);
+	let final_url = "http://isitup.org/".to_owned() + &url + ".json";
+
+	return final_url;
 }
 
 //1 Website is alive.
@@ -41,8 +43,7 @@ fn get_url() -> String {
 
 fn main() {
 	let url = get_url();
-	let final_url = "http://isitup.org/".to_owned() + &url + ".json";
-	let json_result: IsUpResult = reqwest::get(&final_url).unwrap().json().unwrap();
+	let json_result: IsUpResult = reqwest::get(&url).unwrap().json().unwrap();
 
 	println!("{}", json_result.status_code);
 }
