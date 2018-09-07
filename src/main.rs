@@ -37,13 +37,33 @@ fn get_url() -> String {
 	return final_url;
 }
 
-//1 Website is alive.
-//2 Website appears down.
-//3 Domain was not valid.
+fn get_json_file() -> IsUpResult {
+	let url = get_url();
+	let json_result = reqwest::get(&url).unwrap().json().unwrap();
+
+	return json_result;
+}
+
+fn get_status() {
+	let json_result = get_json_file();
+	let status_code = json_result.status_code;
+
+	match status_code {
+		1 => {
+			println!("It's up!");
+		}
+		2 => {
+			println!("It's not just you, it's down!");
+		}
+		3 => {
+			println!("Not a valid domain name.");
+		}
+		_ => {
+			println!("Unknown error: {}", status_code);
+		}
+	}
+}
 
 fn main() {
-	let url = get_url();
-	let json_result: IsUpResult = reqwest::get(&url).unwrap().json().unwrap();
-
-	println!("{}", json_result.status_code);
+	get_status();
 }
