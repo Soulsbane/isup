@@ -1,2 +1,2 @@
 # Usage
-Pretty simple really: isup <url>
+Pretty simple really: isup example.com
