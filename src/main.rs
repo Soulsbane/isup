@@ -12,12 +12,12 @@ use failure::{Error, ResultExt};
 
 #[derive(Deserialize)]
 struct IsUpResult {
-	domain: String,
-	port: i32,
+	_domain: String,
+	_port: i32,
 	status_code: i32,
-	response_ip: String,
-	response_code: i32,
-	response_time: f32,
+	_response_ip: String,
+	_response_code: i32,
+	_response_time: f32,
 }
 
 fn get_url() -> String {
@@ -40,13 +40,6 @@ fn get_url() -> String {
 	return final_url;
 }
 
-fn get_json_file_old() -> IsUpResult {
-	let url = get_url();
-	let json_result = reqwest::get(&url).unwrap().json().unwrap();
-
-	return json_result;
-}
-
 fn get_json_file() -> Result<IsUpResult, Error> {
 	let url = get_url();
 	let json_result: IsUpResult = reqwest::get(&url)
@@ -58,8 +51,6 @@ fn get_json_file() -> Result<IsUpResult, Error> {
 }
 
 fn get_status() {
-	let json_result = get_json_file();
-
 	match get_json_file() {
 		Ok(result) => println!("{}", get_status_message(result.status_code)),
 		Err(e) => eprintln!("{:?}", e),
