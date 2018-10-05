@@ -12,11 +12,16 @@ use failure::{Error, ResultExt};
 
 #[derive(Deserialize)]
 struct IsUpResult {
+	#[serde(default)]
 	_domain: String,
+	#[serde(default)]
 	_port: i32,
 	status_code: i32,
+	#[serde(default)]
 	_response_ip: String,
+	#[serde(default)]
 	_response_code: i32,
+	#[serde(default)]
 	_response_time: f32,
 }
 
@@ -69,7 +74,6 @@ fn get_status_message(status_code: i32) -> String {
 			return "Not a valid domain name.".to_owned();
 		}
 		_ => {
-			//println!("Unknown error: {}", status_code);
 			return "Unknown error!".to_owned();
 		}
 	}
