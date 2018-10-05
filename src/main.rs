@@ -7,6 +7,9 @@ extern crate serde_json;
 extern crate clap;
 use clap::{App, Arg};
 
+extern crate failure;
+use failure::{Error, ResultExt};
+
 #[derive(Deserialize)]
 struct IsUpResult {
 	domain: String,
@@ -37,29 +40,46 @@ fn get_url() -> String {
 	return final_url;
 }
 
-fn get_json_file() -> IsUpResult {
+fn get_json_file_old() -> IsUpResult {
 	let url = get_url();
 	let json_result = reqwest::get(&url).unwrap().json().unwrap();
 
 	return json_result;
 }
 
+fn get_json_file() -> Result<IsUpResult, Error> {
+	let url = get_url();
+	let json_result: IsUpResult = reqwest::get(&url)
+		.context("Failed to connect to that URL")?
+		.json()
+		.context("Could not parse JSON response.")?;
+
+	return Ok(json_result);
+}
+
 fn get_status() {
 	let json_result = get_json_file();
-	let status_code = json_result.status_code;
 
+	match get_json_file() {
+		Ok(result) => println!("{}", get_status_message(result.status_code)),
+		Err(e) => eprintln!("{:?}", e),
+	}
+}
+
+fn get_status_message(status_code: i32) -> String {
 	match status_code {
 		1 => {
-			println!("It's up!");
+			return "It's up!".to_owned();
 		}
 		2 => {
-			println!("It's not just you, it's down!");
+			return "It's not just you, it's down!".to_owned();
 		}
 		3 => {
-			println!("Not a valid domain name.");
+			return "Not a valid domain name.".to_owned();
 		}
 		_ => {
-			println!("Unknown error: {}", status_code);
+			//println!("Unknown error: {}", status_code);
+			return "Unknown error!".to_owned();
 		}
 	}
 }
