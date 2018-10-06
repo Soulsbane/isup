@@ -12,6 +12,7 @@ use failure::{Error, ResultExt};
 
 #[derive(Deserialize)]
 struct IsUpResult {
+	// INFO: Rust will warn for any struct member that isn't used with serde. This prevents those warnings.
 	#[serde(default)]
 	_domain: String,
 	#[serde(default)]
