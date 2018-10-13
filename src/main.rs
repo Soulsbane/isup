@@ -4,6 +4,7 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
+#[macro_use]
 extern crate clap;
 use clap::{App, Arg};
 
@@ -27,16 +28,16 @@ struct IsUpResult {
 }
 
 fn get_url() -> String {
-	let matches = App::new("isup")
-		.version("0.1.0")
-		.author("Paul Crane")
-		.about("Checks if a website is up.")
+	let matches = App::new(crate_name!())
+		.version(crate_version!())
+		.author(crate_authors!("\n"))
+		.about(crate_description!())
 		.arg(
 			Arg::with_name("URL")
 				.required(true)
 				.takes_value(true)
 				.index(1)
-				.help("url to check"),
+				.help("URL of the website to check"),
 		)
 		.get_matches();
 
