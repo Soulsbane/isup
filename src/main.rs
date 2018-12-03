@@ -3,12 +3,11 @@ extern crate reqwest;
 extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
-
+extern crate failure;
 #[macro_use]
 extern crate clap;
-use clap::{App, Arg};
 
-extern crate failure;
+use clap::{App, Arg};
 use failure::{Error, ResultExt};
 
 #[derive(Deserialize)]
