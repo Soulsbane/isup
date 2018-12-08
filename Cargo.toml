@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Checks if a website is down."
 authors = ["Paul Crane <paul@acheronsoft.com>"]
 readme = "README.md"
+edition = "2018"
 
 [dependencies]
 reqwest = { git = "https://github.com/seanmonstar/reqwest" }
