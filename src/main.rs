@@ -1,4 +1,6 @@
 #[macro_use]
+extern crate human_panic;
+#[macro_use]
 extern crate serde_derive;
 #[macro_use]
 extern crate clap;
@@ -77,5 +79,6 @@ fn get_status_message(status_code: i32) -> String {
 }
 
 fn main() {
+	setup_panic!();
 	get_status();
 }
